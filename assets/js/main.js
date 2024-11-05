@@ -1,30 +1,75 @@
 document
   .getElementById("imc-form")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+  .addEventListener("submit", handleFormSubmit);
 
-    let peso = parseFloat(document.getElementById("peso").value);
-    let altura = parseFloat(document.getElementById("altura").value) / 100;
+// Constantes para limites de IMC
+const CATEGORIAS_IMC = [
+  { limite: 18.5, mensagem: "Abaixo do peso" },
+  { limite: 24.9, mensagem: "Peso normal" },
+  { limite: 29.9, mensagem: "Sobrepeso" },
+  { limite: 34.9, mensagem: "Obesidade grau I" },
+  { limite: 39.9, mensagem: "Obesidade grau II" },
+  { limite: Infinity, mensagem: "Obesidade grau III" }, // Para IMC >= 40
+];
 
-    // Calculo do IMC
-    let IMC = peso / altura ** 2;
-    let resultado = "";
+// Função principal para lidar com o envio do formulário
+function handleFormSubmit(event) {
+  event.preventDefault(); // Impede o envio padrão do formulário
 
-    if (IMC < 18.5) {
-      resultado = "Abaixo do peso";
-    } else if (IMC >= 18.5 && IMC <= 24.9) {
-      resultado = "Peso normal";
-    } else if (IMC >= 25 && IMC <= 29.9) {
-      resultado = "Sobrepeso";
-    } else if (IMC >= 30 && IMC <= 34.9) {
-      resultado = "Obesidade grau I";
-    } else if (IMC >= 35 && IMC <= 39.9) {
-      resultado = "Obesidade grau II";
-    } else if (IMC >= 40) {
-      resultado = "Obesidade grau III";
+  const peso = obterPeso();
+  const altura = obterAltura();
+
+  // Verifica se os dados são válidos antes de calcular o IMC
+  if (!peso || !altura) {
+    alert("Por favor, insira valores válidos para peso e altura.");
+    return;
+  }
+
+  const imc = calcularIMC(peso, altura);
+  const resultado = determinarCategoriaIMC(imc);
+
+  setResultado(resultado, imc);
+}
+
+// Função para obter o peso do input
+function obterPeso() {
+  return parseFloat(document.getElementById("peso").value);
+}
+
+// Função para obter a altura do input
+function obterAltura() {
+  return parseFloat(document.getElementById("altura").value) / 100; // Converte cm para m
+}
+
+// Função para calcular o IMC
+function calcularIMC(peso, altura) {
+  return peso / altura ** 2;
+}
+
+// Função para determinar a categoria do IMC
+function determinarCategoriaIMC(imc) {
+  for (const categoria of CATEGORIAS_IMC) {
+    if (imc <= categoria.limite) {
+      return categoria.mensagem;
     }
+  }
+}
 
-    document.getElementById("resultado").innerText = `Seu IMC é ${IMC.toFixed(
-      2
-    )}: ${resultado}`;
-  });
+// Função para definir o resultado no innerHTML
+function setResultado(mensagem, imc) {
+  const resultadoContainer = document.getElementById("resultado");
+  const resultadoParagrafo = criarElementoParagrafo(
+    `Seu IMC é ${imc.toFixed(2)}: ${mensagem}`
+  );
+
+  // Limpa resultados anteriores e adiciona o novo parágrafo
+  resultadoContainer.innerHTML = ""; // Limpa o container
+  resultadoContainer.appendChild(resultadoParagrafo); // Adiciona o novo parágrafo
+}
+
+// Função para criar uma tag <p>
+function criarElementoParagrafo(texto) {
+  const paragrafo = document.createElement("p");
+  paragrafo.innerText = texto;
+  return paragrafo;
+}
