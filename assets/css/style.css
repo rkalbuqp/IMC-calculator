@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+
+:root {
+  --primary-color: #115666;
+  --primary-color-darker: #093238;
+  --background-color: #f4f7f9;
+  --text-color: #333;
+  --table-header-bg: #f1f5f8;
+  --table-border: #dce1e5;
+  --input-border: #d1d9de;
+  --input-focus-border: #115666;
+  --button-hover-bg: #093238;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.1em;
+  line-height: 1.6;
+  background: var(--primary-color-darker);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--table-border);
+}
+
+th {
+  background-color: var(--table-header-bg);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+td {
+  color: var(--text-color);
+}
+
+.container table th:first-child,
+.container table td:first-child {
+  padding-right: 40px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+form input,
+form label,
+form button {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+form input {
+  font-size: 1em;
+  height: 50px;
+  padding: 0 15px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+form input:focus {
+  border-color: var(--input-focus-border);
+  outline: none;
+  box-shadow: 0 0 5px rgba(17, 86, 102, 0.2);
+}
+
+form label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--primary-color-darker);
+}
+
+form button {
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 1em;
+  font-weight: 700;
+  height: 50px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+form button:hover {
+  background-color: var(--button-hover-bg);
+  transform: translateY(-2px);
+}
+
+form button:active {
+  transform: translateY(0);
+}
